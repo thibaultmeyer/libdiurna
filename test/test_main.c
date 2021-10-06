@@ -1,7 +1,11 @@
+#include <stddef.h>
 #include "../src/diurna.h"
 
 int main(const int argc, const char *const *argv) {
-    diurna_initialize("test");
+    (void) argc; // Unused
+    (void) argv; // Unused
+
+    diurna_initialize("test_diurna", DIURNA_LOGLEVEL_DEBUG, NULL);
 
     diurna_info("libdiurna version %s (%d)", diurna_get_version_as_str(), diurna_get_version_as_int());
     diurna_debug("Aliquam sed mi risus");

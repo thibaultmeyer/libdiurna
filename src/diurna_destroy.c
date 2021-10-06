@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "diurna.h"
+#include "internal.h"
 
 void diurna_destroy(void) {
     if (gl_diurna_ctx_handle != NULL) {

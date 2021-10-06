@@ -1,6 +1,8 @@
 #ifndef LIBDIURNA_H
 # define LIBDIURNA_H
 
+# include <sys/time.h>
+
 # ifdef __cplusplus
 extern "C"
 {
@@ -16,26 +18,20 @@ typedef enum e_diurna_log_level {
     DIURNA_LOGLEVEL_ERROR = 3
 } e_diurna_log_level;
 
-/**
- * Diurna context.
- */
-typedef struct s_diurna_context {
-    char                    *app_name;
-    enum e_diurna_log_level log_level;
-} s_diurna_context;
-
-/**
- * Handle to the global Diurna context.
- */
-extern s_diurna_context *gl_diurna_ctx_handle;
+typedef void (*f_appender)(const char *app_name,
+                           const enum e_diurna_log_level,
+                           const struct timeval *const tv,
+                           const char *log_msg);
 
 /**
  * Initialize Diurna.
  *
  * @param app_name The application name
+ * @param log_level The log level
+ * @param appender The appender to use, if NULL, all messages are print on the console
  * @return zero in case of success
  */
-int diurna_initialize(const char* app_name);
+int diurna_initialize(const char *app_name, enum e_diurna_log_level log_level, f_appender appender);
 
 /**
  * Destroy Diurna.
@@ -87,6 +83,17 @@ int diurna_get_version_as_int(void);
  * @return The Diurna library version as a string (ie: 1.0.0)
  */
 const char *diurna_get_version_as_str(void);
+
+/**
+ * Appender - Console.
+ *
+ * @param tv The current time
+ * @param log_msg The current message
+ */
+void diurna_appender_console(const char *app_name,
+                             enum e_diurna_log_level,
+                             const struct timeval *tv,
+                             const char *log_msg);
 
 # ifdef __cplusplus
 }

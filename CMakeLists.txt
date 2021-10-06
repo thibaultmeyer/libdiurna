@@ -25,6 +25,7 @@ ENDIF (NOT CMAKE_BUILD_TYPE)
 
 # Source Files
 SET(SOURCE_FILES ${SOURCE_FILES}
+        src/diurna_appender_console.c
         src/diurna_destroy.c
         src/diurna_get_version_as_int.c
         src/diurna_get_version_as_str.c
