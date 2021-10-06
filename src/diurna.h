@@ -32,9 +32,10 @@ extern s_diurna_context *gl_diurna_ctx_handle;
 /**
  * Initialize Diurna.
  *
+ * @param app_name The application name
  * @return zero in case of success
  */
-int diurna_initialize(void);
+int diurna_initialize(const char* app_name);
 
 /**
  * Destroy Diurna.

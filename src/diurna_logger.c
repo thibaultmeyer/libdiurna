@@ -1,6 +1,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <sys/time.h>
 #include "diurna.h"
 
 static inline void internal_logger(const enum e_diurna_log_level level,
@@ -9,12 +11,20 @@ static inline void internal_logger(const enum e_diurna_log_level level,
     // Retrieve the total size of the message
     va_list args_copy;
     va_copy(args_copy, args);
-    size_t msg_size = snprintf(NULL, 0, msg_format, args_copy);
+    size_t msg_size = vsnprintf(NULL, 0, msg_format, args_copy);
     va_end(args_copy);
 
     // Create message
     char *msg = malloc(sizeof(char) * msg_size + 1);
     vsnprintf(msg, msg_size + 1, msg_format, args);
+
+    // Time
+    char           date_stamp[64] = {0};
+    struct timeval tv             = {0};
+
+    gettimeofday(&tv, NULL);
+    struct tm *tm_stamp = gmtime(&tv.tv_sec);
+    strftime(date_stamp, sizeof(date_stamp), "%Y-%m-%d %H:%M:%S", tm_stamp);
 
     // Level
     char *level_as_str;
@@ -36,7 +46,7 @@ static inline void internal_logger(const enum e_diurna_log_level level,
     }
 
     // Output message to all configured logger output
-    printf("2021-01-01 12:32:23.324 [%s] %s\n", level_as_str, msg);
+    printf("%s.%.03d [%s] %s\n", date_stamp, (int) (tv.tv_usec / 1000), level_as_str, msg);
     free(msg);
 }
 

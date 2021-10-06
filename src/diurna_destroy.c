@@ -2,6 +2,10 @@
 #include "diurna.h"
 
 void diurna_destroy(void) {
-    free(gl_diurna_ctx_handle);
-    gl_diurna_ctx_handle = NULL;
+    if (gl_diurna_ctx_handle != NULL) {
+        free(gl_diurna_ctx_handle->app_name);
+        free(gl_diurna_ctx_handle);
+
+        gl_diurna_ctx_handle = NULL;
+    }
 }
