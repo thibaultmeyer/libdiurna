@@ -3,7 +3,7 @@
 #include "diurna_queue.h"
 
 struct s_diurna_queue *diurna_queue_initialize(void) {
-    struct s_diurna_queue *queue = malloc(sizeof(struct s_diurna_queue));
+    struct s_diurna_queue *queue = malloc(sizeof(struct s_diurna_queue) + 1);
     if (queue == NULL) {
         return (NULL);
     }

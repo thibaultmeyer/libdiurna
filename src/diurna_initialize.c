@@ -10,8 +10,8 @@ int diurna_initialize(const char *const app_name,
                       const f_appender appender) {
     if (gl_diurna_ctx_handle == NULL) {
         // Allocate memory
-        gl_diurna_ctx_handle = malloc(sizeof(struct s_diurna_context));
-        memset(gl_diurna_ctx_handle, 0, sizeof(struct s_diurna_context));
+        gl_diurna_ctx_handle = malloc(sizeof(struct s_diurna_context) + 1);
+        memset(gl_diurna_ctx_handle, 0, sizeof(struct s_diurna_context) + 1);
 
         // Initialize context
         gl_diurna_ctx_handle->app_name  = strdup(app_name);
@@ -25,7 +25,7 @@ int diurna_initialize(const char *const app_name,
 #if defined USE_WINTHREAD
         gl_diurna_ctx_handle->log_consumer_thread = CreateThread(NULL, 0, &log_consumer_thread, NULL, 0, NULL);
 #else
-        pthread_create(&gl_diurna_ctx_handle->log_consumer_thread, 0, &log_consumer_thread, NULL);
+        pthread_create(&gl_diurna_ctx_handle->log_consumer_thread, NULL, &log_consumer_thread, NULL);
 #endif
     }
 

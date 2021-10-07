@@ -9,7 +9,7 @@ void diurna_appender_console(const char *const app_name,
     (void) app_name; // Unused parameter
 
     // Convert timeval to human reading time
-    char      date_stamp[64] = {0};
+    char      date_stamp[24] = {0};
     struct tm *tm_stamp      = gmtime(&tv->tv_sec);
     strftime(date_stamp, sizeof(date_stamp), "%Y-%m-%d %H:%M:%S", tm_stamp);
 

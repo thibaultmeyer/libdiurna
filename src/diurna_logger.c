@@ -9,8 +9,8 @@ static inline void add_message_to_queue(const enum e_diurna_log_level level,
                                         const char *msg_format,
                                         va_list args) {
     // Prepare log message structure
-    struct s_diurna_log_message *log_msg = malloc(sizeof(struct s_diurna_log_message));
-    memset(log_msg, 0, sizeof(struct s_diurna_log_message));
+    struct s_diurna_log_message *log_msg = malloc(sizeof(struct s_diurna_log_message) + 1);
+    memset(log_msg, 0, sizeof(struct s_diurna_log_message) + 1);
 
     // Level
     log_msg->level = level;
