@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <time.h>
-#include "diurna.h"
+#include "../diurna.h"
 
 void diurna_appender_console(const char *const app_name,
                              const enum e_diurna_log_level level,
                              const struct timeval *const tv,
                              const char *const log_msg) {
+    (void) app_name; // Unused parameter
+
     // Convert timeval to human reading time
     char      date_stamp[64] = {0};
     struct tm *tm_stamp      = gmtime(&tv->tv_sec);

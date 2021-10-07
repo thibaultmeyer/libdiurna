@@ -23,13 +23,26 @@ ELSE (NOT CMAKE_BUILD_TYPE)
     MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 ENDIF (NOT CMAKE_BUILD_TYPE)
 
+# Thread
+FIND_PACKAGE(Threads REQUIRED)
+IF (CMAKE_USE_PTHREADS_INIT)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_PTHREAD=1")
+ELSEIF (CMAKE_USE_WIN32_THREADS_INIT)
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_WINTHREAD=1")
+ENDIF (CMAKE_USE_PTHREADS_INIT)
+
 # Source Files
 SET(SOURCE_FILES ${SOURCE_FILES}
-        src/diurna_appender_console.c
+        src/appender/diurna_appender_console.c
+        src/queue/diurna_queue_dequeue.c
+        src/queue/diurna_queue_destroy.c
+        src/queue/diurna_queue_initialize.c
+        src/queue/diurna_queue_queue.c
         src/diurna_destroy.c
         src/diurna_get_version_as_int.c
         src/diurna_get_version_as_str.c
         src/diurna_initialize.c
+        src/diurna_log_consumer_thread.c
         src/diurna_logger.c)
 
 # Test Files
@@ -47,6 +60,12 @@ SET_TARGET_PROPERTIES(lib-diurna-shared PROPERTIES OUTPUT_NAME "diurna")
 
 # Binary (Unit Tests)
 ADD_EXECUTABLE(lib-diurna-test $<TARGET_OBJECTS:lib-diurna-obj> ${TEST_FILES})
+
+IF (WIN32)
+    TARGET_LINK_LIBRARIES(lib-diurna-test Threads::Threads)
+ELSE (WIN32)
+    TARGET_LINK_LIBRARIES(lib-diurna-test Threads::Threads)
+ENDIF (WIN32)
 
 # Install
 IF (NOT MSVC)

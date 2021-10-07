@@ -2,8 +2,8 @@
 #include "../src/diurna.h"
 
 int main(const int argc, const char *const *argv) {
-    (void) argc; // Unused
-    (void) argv; // Unused
+    (void) argc; // Unused parameter
+    (void) argv; // Unused parameter
 
     diurna_initialize("test_diurna", DIURNA_LOGLEVEL_DEBUG, NULL);
 
