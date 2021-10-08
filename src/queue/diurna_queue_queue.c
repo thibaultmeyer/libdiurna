@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "diurna_queue.h"
+#include "diurna_internal.h"
 
 void diurna_queue_queue(struct s_diurna_queue *queue, struct s_diurna_log_message *msg) {
     if (queue == NULL || msg == NULL) {

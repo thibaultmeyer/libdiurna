@@ -1,6 +1,6 @@
-#include "diurna.h"
-#include "internal.h"
 #include <stdlib.h>
+#include "diurna.h"
+#include "diurna_internal.h"
 
 void *log_consumer_thread(void *arg) {
     struct s_diurna_log_message *msg;

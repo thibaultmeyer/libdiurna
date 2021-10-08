@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <time.h>
-#include "../diurna.h"
+#include "diurna.h"
 
 void diurna_appender_console(const char *const app_name,
                              const enum e_diurna_log_level level,

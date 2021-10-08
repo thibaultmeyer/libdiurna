@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "diurna.h"
-#include "internal.h"
+#include "diurna_internal.h"
 
 s_diurna_context *gl_diurna_ctx_handle = NULL;
 

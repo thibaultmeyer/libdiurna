@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "diurna.h"
-#include "internal.h"
+#include "diurna_internal.h"
 
 static inline void add_message_to_queue(const enum e_diurna_log_level level,
                                         const char *msg_format,

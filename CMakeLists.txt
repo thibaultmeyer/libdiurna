@@ -14,7 +14,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O2")
 # Configure version.h file
 SET(LIBDIURNA_VERSION_STRING "1.0.0")
 SET(LIBDIURNA_VERSION_NUMBER "10000")
-CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/res/version.h.template ${CMAKE_SOURCE_DIR}/src/version.h)
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/res/version.h.template ${CMAKE_SOURCE_DIR}/inc/version.h)
 
 # Display build type
 IF (NOT CMAKE_BUILD_TYPE)
@@ -31,19 +31,22 @@ ELSEIF (CMAKE_USE_WIN32_THREADS_INIT)
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_WINTHREAD=1")
 ENDIF (CMAKE_USE_PTHREADS_INIT)
 
+# Header directories
+INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/inc")
+
 # Source Files
 SET(SOURCE_FILES ${SOURCE_FILES}
         src/appender/diurna_appender_console.c
+        src/core/diurna_destroy.c
+        src/core/diurna_get_version_as_int.c
+        src/core/diurna_get_version_as_str.c
+        src/core/diurna_initialize.c
+        src/core/diurna_log_consumer_thread.c
+        src/core/diurna_logger.c
         src/queue/diurna_queue_dequeue.c
         src/queue/diurna_queue_destroy.c
         src/queue/diurna_queue_initialize.c
-        src/queue/diurna_queue_queue.c
-        src/diurna_destroy.c
-        src/diurna_get_version_as_int.c
-        src/diurna_get_version_as_str.c
-        src/diurna_initialize.c
-        src/diurna_log_consumer_thread.c
-        src/diurna_logger.c)
+        src/queue/diurna_queue_queue.c)
 
 # Test Files
 SET(TEST_FILES ${TEST_FILES}
@@ -72,4 +75,4 @@ IF (NOT MSVC)
     INSTALL(TARGETS lib-diurna-static ARCHIVE DESTINATION lib LIBRARY DESTINATION lib RUNTIME DESTINATION bin)
 ENDIF (NOT MSVC)
 INSTALL(TARGETS lib-diurna-shared ARCHIVE DESTINATION lib LIBRARY DESTINATION lib RUNTIME DESTINATION bin)
-INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/src/ DESTINATION include FILES_MATCHING PATTERN "*.h*")
+INSTALL(FILES ${CMAKE_SOURCE_DIR}/inc/diurna.h DESTINATION include)

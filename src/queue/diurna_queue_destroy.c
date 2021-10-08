@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "diurna_queue.h"
+#include "diurna_internal.h"
 
 void diurna_queue_destroy(struct s_diurna_queue *queue) {
     if (queue != NULL) {

@@ -1,8 +1,23 @@
-#ifndef LIBDIURNA_QUEUE_INTERNAL_H
-# define LIBDIURNA_QUEUE_INTERNAL_H
+#ifndef LIBDIURNA_INTERNAL_H
+# define LIBDIURNA_INTERNAL_H
 
-# include "../diurna.h"
-# include <pthread.h>
+# include "diurna.h"
+
+#if defined _WIN32 && defined USE_WINTHREAD
+
+#  define WIN32_LEAN_AND_MEAN
+
+#  include <Windows.h>
+#  include <processthreadsapi.h>
+
+typedef HANDLE THREAD;
+
+# else
+
+#  include <pthread.h>
+
+typedef pthread_t THREAD;
+# endif
 
 /**
  * Message used internally by Diurna.
@@ -12,7 +27,7 @@ typedef struct s_diurna_log_message {
     enum e_diurna_log_level     level;
     struct timeval              time;
     char                        *message;
-} s_diurna_log_message;
+}                 s_diurna_log_message;
 
 /**
  * Message queue.
@@ -21,7 +36,23 @@ typedef struct s_diurna_queue {
     pthread_mutex_t             lock;
     struct s_diurna_log_message *newest;
     struct s_diurna_log_message *oldest;
-} s_diurna_queue;
+}                 s_diurna_queue;
+
+/**
+ * Diurna context.
+ */
+typedef struct s_diurna_context {
+    char                    *app_name;
+    enum e_diurna_log_level log_level;
+    THREAD                  log_consumer_thread;
+    struct s_diurna_queue   *msg_queue;
+    f_appender              appender[32];
+}                 s_diurna_context;
+
+/**
+ * Handle to the global Diurna context.
+ */
+extern s_diurna_context *gl_diurna_ctx_handle;
 
 /**
  * Take the oldest message from the queue.
@@ -53,4 +84,12 @@ struct s_diurna_queue *diurna_queue_initialize(void);
  */
 void diurna_queue_queue(struct s_diurna_queue *queue, struct s_diurna_log_message *msg);
 
-#endif //LIBDIURNA_QUEUE_INTERNAL_H
+/**
+ * Thread - Log consumer.
+ *
+ * @param arg Thread argument
+ * @return zero
+ */
+void *log_consumer_thread(void *arg);
+
+#endif //LIBDIURNA_INTERNAL_H

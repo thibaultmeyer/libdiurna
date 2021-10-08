@@ -1,5 +1,5 @@
 #include <stddef.h>
-#include "../src/diurna.h"
+#include "diurna.h"
 
 int main(const int argc, const char *const *argv) {
     (void) argc; // Unused parameter
