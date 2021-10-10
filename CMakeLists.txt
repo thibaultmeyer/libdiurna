@@ -48,6 +48,7 @@ INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/inc")
 # Source Files
 SET(SOURCE_FILES ${SOURCE_FILES}
         src/appender/diurna_appender_console.c
+        src/appender/diurna_appender_syslog.c
         src/core/diurna_destroy.c
         src/core/diurna_get_version_as_int.c
         src/core/diurna_get_version_as_str.c

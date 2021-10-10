@@ -73,7 +73,7 @@ void diurna_error(const char *msg_format, ...);
 /**
  * Returns the Diurna library version as a number.
  *
- * @return The Diurna library version as a number (ie: 10000 = 1.0.0)
+ * @return The Diurna library version as a number (ie: 1000000 = 1.0.0)
  */
 int diurna_get_version_as_int(void);
 
@@ -87,13 +87,28 @@ const char *diurna_get_version_as_str(void);
 /**
  * Appender - Console.
  *
+ * @param app_name The application name
+ * @param log_level The log level (ie : DIURNA_LOGLEVEL_INFO)
  * @param tv The current time
  * @param log_msg The current message
  */
 void diurna_appender_console(const char *app_name,
-                             enum e_diurna_log_level,
+                             enum e_diurna_log_level log_level,
                              const struct timeval *tv,
                              const char *log_msg);
+
+/**
+ * Appender - Syslog.
+ *
+ * @param app_name The application name
+ * @param log_level The log level (ie : DIURNA_LOGLEVEL_INFO)
+ * @param tv The current time
+ * @param log_msg The current message
+ */
+void diurna_appender_syslog(const char *app_name,
+                            enum e_diurna_log_level log_level,
+                            const struct timeval *tv,
+                            const char *log_msg);
 
 # ifdef __cplusplus
 }
