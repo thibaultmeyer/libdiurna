@@ -1,0 +1,1 @@
+A simple, fast, and portable logging library for C applications
