@@ -19,6 +19,8 @@ typedef HANDLE THREAD;
 typedef pthread_t THREAD;
 # endif
 
+# define DIURNA_MAX_APPENDER 32
+
 /**
  * Message used internally by Diurna.
  */
@@ -46,7 +48,7 @@ typedef struct s_diurna_context {
     enum e_diurna_log_level log_level;
     THREAD                  log_consumer_thread;
     struct s_diurna_queue   *msg_queue;
-    f_appender              appender[32];
+    f_appender              appender[DIURNA_MAX_APPENDER];
 }                 s_diurna_context;
 
 /**
@@ -55,7 +57,7 @@ typedef struct s_diurna_context {
 extern s_diurna_context *gl_diurna_ctx_handle;
 
 /**
- * Take the oldest message from the queue.
+ * Takes the oldest message from the queue.
  *
  * @param queue The queue to use
  * @return The oldest message from the queue. If the queue is empty, NULL will be returned
@@ -63,14 +65,14 @@ extern s_diurna_context *gl_diurna_ctx_handle;
 struct s_diurna_log_message *diurna_queue_dequeue(struct s_diurna_queue *queue);
 
 /**
- * Destroy the given message queue.
+ * Destroys the given message queue.
  *
  * @param queue The message queue to destroy
  */
 void diurna_queue_destroy(struct s_diurna_queue *queue);
 
 /**
- * Initialize message queue.
+ * Initializes message queue.
  *
  * @return The initialized message queue, otherwise, NULL
  */

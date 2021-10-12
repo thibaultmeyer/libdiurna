@@ -3,8 +3,9 @@
 #include "diurna_internal.h"
 
 void *log_consumer_thread(void *arg) {
-    struct s_diurna_log_message *msg;
+    (void) arg; // Unused parameter
 
+    struct s_diurna_log_message *msg;
     while (gl_diurna_ctx_handle->msg_queue != NULL) {
         msg = diurna_queue_dequeue(gl_diurna_ctx_handle->msg_queue);
 
@@ -27,5 +28,5 @@ void *log_consumer_thread(void *arg) {
     pthread_exit(EXIT_SUCCESS);
 #endif
 
-    return (0);
+    return (NULL);
 }

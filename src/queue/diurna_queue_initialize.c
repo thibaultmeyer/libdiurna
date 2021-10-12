@@ -9,7 +9,11 @@ struct s_diurna_queue *diurna_queue_initialize(void) {
     }
 
     memset(queue, 0, sizeof(struct s_diurna_queue));
-    pthread_mutex_init(&queue->lock, NULL);
+    int ret = pthread_mutex_init(&queue->lock, NULL);
+    if (ret != 0) {
+        free(queue);
+        return (NULL);
+    }
 
     return (queue);
 }

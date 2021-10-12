@@ -49,12 +49,16 @@ INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/inc")
 SET(SOURCE_FILES ${SOURCE_FILES}
         src/appender/diurna_appender_console.c
         src/appender/diurna_appender_syslog.c
+        src/core/diurna_cfg_appender_register.c
+        src/core/diurna_cfg_appender_unregister_all.c
+        src/core/diurna_cfg_loglevel_set.c
         src/core/diurna_destroy.c
-        src/core/diurna_get_version_as_int.c
-        src/core/diurna_get_version_as_str.c
         src/core/diurna_initialize.c
+        src/core/diurna_initialize_ex.c
         src/core/diurna_log_consumer_thread.c
         src/core/diurna_logger.c
+        src/core/diurna_version_as_int.c
+        src/core/diurna_version_as_str.c
         src/queue/diurna_queue_dequeue.c
         src/queue/diurna_queue_destroy.c
         src/queue/diurna_queue_initialize.c

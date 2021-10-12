@@ -20,15 +20,19 @@ clang or MSVC are being correctly installed.
 ```
 
 ## Usage
+
 ```c
 #include <diurna.h>
 
 int main(const int argc, const char *const *argv) {
     // Initialize Diurna with min log level "INFO" and default appender
-    diurna_initialize("my_application", DIURNA_LOGLEVEL_INFO, NULL);
+    int ret = diurna_initialize("test_diurna", DIURNA_LOGLEVEL_DEBUG);
+    if (ret != DIURNA_SUCCESS) {
+        return (1);
+    }
 
     // Add a new message with level "INFORMATION"
-    diurna_info("libdiurna version %s (%d)", diurna_get_version_as_str(), diurna_get_version_as_int());
+    diurna_info("libdiurna version %s (%d)", diurna_version_as_str(), diurna_version_as_int());
 
     // Flush latest log message and destroy Diurna context
     diurna_destroy();
