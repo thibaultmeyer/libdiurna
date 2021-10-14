@@ -1,0 +1,57 @@
+.TH DIURNA_CFG_LOGLEVEL_SET 3 2021-10-13 "" "Linux Programmer's Manual"
+.SH NAME
+diurna_cfg_loglevel_set \- Changes the current log level
+.SH LIBRARY
+Diurna C Library (diurna, -ldiurna)
+.SH SYNOPSIS
+.nf
+.B #include <diurna.h>
+.PP
+.BI ""int " diurna_cfg_loglevel_set(enum e_diurna_log_level " log_level ");
+.PP
+.PP
+.BI "typedef enum " e_diurna_log_level " {
+.RS 4
+.BI DIURNA_LOGLEVEL_DEBUG,
+.RE
+.RS 4
+.BI DIURNA_LOGLEVEL_INFO,
+.RE
+.RS 4
+.BI DIURNA_LOGLEVEL_WARN,
+.RE
+.RS 4
+.BI DIURNA_LOGLEVEL_ERROR
+.RE
+.RS 0
+.BI } " e_diurna_log_level";
+.RE
+.SH DESCRIPTION
+The
+.BR diurna_cfg_loglevel_set()
+function changes the minimum message log level. Useful, by example, if you need to log only ERROR messages.
+.SH RETURN VALUE
+On success,
+.BR diurna_cfg_loglevel_set()
+returns zero; on error, it returns an error number.
+.SH ERRORS
+.BR diurna_cfg_appender_unregister_all()
+can fail with the following error:
+.TP
+.B DIURNA_E_NOINIT
+Diurna is not initialized.
+.SH SEE ALSO
+.ad l
+.nh
+.BR diurna_initialize (3),
+.BR diurna_initialize_ex (3),
+.BR diurna_destroy (3),
+.BR diurna_cfg_appender_register (3),
+.BR diurna_cfg_appender_unregister_all (3),
+.BR diurna_cfg_loglevel_set (3),
+.BR diurna_version_as_int (3),
+.BR diurna_version_as_str (3),
+.BR diurna_debug (3),
+.BR diurna_info (3),
+.BR diurna_warn (3),
+.BR diurna_error (3)

@@ -1,0 +1,43 @@
+.TH DIURNA_VERSION_AS_STR 3 2021-10-13 "" "Linux Programmer's Manual"
+.SH NAME
+diurna_version_as_int, diurna_version_as_str \- Diurna library version
+.SH LIBRARY
+Diurna C Library (diurna, -ldiurna)
+.SH SYNOPSIS
+.nf
+.B #include <diurna.h>
+.PP
+.BI ""int " diurna_version_as_int(void);
+.PP
+.BI "" const "" " char* " diurna_version_as_str(void);
+.SH DESCRIPTION
+The
+.BR diurna_version_as_int()
+and
+.BR diurna_version_as_str()
+functions return the Diurna library version.
+.SH RETURN VALUE
+.BR diurna_version_as_int()
+returns the version as a number following the format XXXYYYZZZ (leading zero are removed). By Example, the version
+.BI ""1.2.39
+(STR) will become
+.BI ""1002039
+(INT).
+.PP
+.BR diurna_version_as_str ()
+returns the version as a simple string.
+.SH SEE ALSO
+.ad l
+.nh
+.BR diurna_initialize (3),
+.BR diurna_initialize_ex (3),
+.BR diurna_destroy (3),
+.BR diurna_cfg_appender_register (3),
+.BR diurna_cfg_appender_unregister_all (3),
+.BR diurna_cfg_loglevel_set (3),
+.BR diurna_version_as_int (3),
+.BR diurna_version_as_str (3),
+.BR diurna_debug (3),
+.BR diurna_info (3),
+.BR diurna_warn (3),
+.BR diurna_error (3)

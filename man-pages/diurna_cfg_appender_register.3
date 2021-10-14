@@ -1,0 +1,55 @@
+.TH DIURNA_CFG_APPENDER_REGISTER 3 2021-10-13 "" "Linux Programmer's Manual"
+.SH NAME
+diurna_cfg_appender_register \- Register a new log message appender
+.SH LIBRARY
+Diurna C Library (diurna, -ldiurna)
+.SH SYNOPSIS
+.nf
+.B #include <diurna.h>
+.PP
+.BI ""int " diurna_cfg_appender_register(f_appender " appender ");
+.PP
+.PP
+.BI ""typedef " void (* " f_appender ") (const char * " app_name ",
+.RE
+.RS 36
+.BI "const enum " e_diurna_log_level ",
+.RE
+.RS 36
+.BI "const struct timeval * const " tv ",
+.RE
+.RS 36
+.BI "const char * " log_msg );
+.RE
+.SH DESCRIPTION
+The
+.BR diurna_cfg_appender_register()
+function is useful to register a new log message appender. Diurna can handle up to 32 appender.
+.SH RETURN VALUE
+On success,
+.BR diurna_cfg_appender_register()
+returns zero; on error, it returns an error number.
+.SH ERRORS
+.BR diurna_cfg_appender_register()
+can fail with the following error:
+.TP
+.B DIURNA_E_NOINIT
+Diurna is not initialized.
+.TP
+.B DIURNA_E_NOMOREAPPENDER
+No more appender slot (max. 32).
+.SH SEE ALSO
+.ad l
+.nh
+.BR diurna_initialize (3),
+.BR diurna_initialize_ex (3),
+.BR diurna_destroy (3),
+.BR diurna_cfg_appender_register (3),
+.BR diurna_cfg_appender_unregister_all (3),
+.BR diurna_cfg_loglevel_set (3),
+.BR diurna_version_as_int (3),
+.BR diurna_version_as_str (3),
+.BR diurna_debug (3),
+.BR diurna_info (3),
+.BR diurna_warn (3),
+.BR diurna_error (3)

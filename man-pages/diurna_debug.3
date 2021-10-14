@@ -1,0 +1,33 @@
+.TH DIURNA_DEBUG 3 2021-10-13 "" "Linux Programmer's Manual"
+.SH NAME
+diurna_debug, diurna_info, diurna_warn, diurna_error \- Log a new message
+.SH LIBRARY
+Diurna C Library (diurna, -ldiurna)
+.SH SYNOPSIS
+.nf
+.B #include <diurna.h>
+.PP
+.BI "" void " diurna_debug("const " " char* " msg_format, "... ");
+.PP
+.BI "" void " diurna_info("const " " char* " msg_format, "... ");
+.PP
+.BI "" void " diurna_warn("const " " char* " msg_format, "... ");
+.PP
+.BI "" void " diurna_error("const " " char* " msg_format, "... ");
+.SH DESCRIPTION
+These functions are used to log messages with different levels of severity.
+.SH SEE ALSO
+.ad l
+.nh
+.BR diurna_initialize (3),
+.BR diurna_initialize_ex (3),
+.BR diurna_destroy (3),
+.BR diurna_cfg_appender_register (3),
+.BR diurna_cfg_appender_unregister_all (3),
+.BR diurna_cfg_loglevel_set (3),
+.BR diurna_version_as_int (3),
+.BR diurna_version_as_str (3),
+.BR diurna_debug (3),
+.BR diurna_info (3),
+.BR diurna_warn (3),
+.BR diurna_error (3)
