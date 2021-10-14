@@ -13,7 +13,7 @@ void diurna_queue_destroy(struct s_diurna_queue *queue) {
         }
 
         // Destroy mutex
-        pthread_mutex_destroy(&queue->lock);
+        DIURNA_LOCK_DESTROY(queue->lock);
 
         // Free allocated queue
         free(queue);

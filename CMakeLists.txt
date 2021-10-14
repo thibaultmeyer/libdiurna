@@ -46,9 +46,24 @@ ENDIF (CMAKE_USE_PTHREADS_INIT)
 INCLUDE_DIRECTORIES("${CMAKE_SOURCE_DIR}/inc")
 
 # Source Files
+IF (WIN32)
+    LIST(
+            APPEND
+            WINDOWS_FILES
+            src/windows/win_nanosleep.c)
+ENDIF (WIN32)
+
+IF (NOT WIN32)
+    ADD_DEFINITIONS("-DHAVE_SYSLOG=1")
+    LIST(
+            APPEND
+            APPENDER_SYSLOG_FILES
+            src/appender/diurna_appender_syslog.c)
+ENDIF (NOT WIN32)
+
 SET(SOURCE_FILES ${SOURCE_FILES}
         src/appender/diurna_appender_console.c
-        src/appender/diurna_appender_syslog.c
+        ${APPENDER_SYSLOG_FILES}
         src/core/diurna_cfg_appender_register.c
         src/core/diurna_cfg_appender_unregister_all.c
         src/core/diurna_cfg_loglevel_set.c
@@ -62,7 +77,8 @@ SET(SOURCE_FILES ${SOURCE_FILES}
         src/queue/diurna_queue_dequeue.c
         src/queue/diurna_queue_destroy.c
         src/queue/diurna_queue_initialize.c
-        src/queue/diurna_queue_queue.c)
+        src/queue/diurna_queue_queue.c
+        ${WINDOWS_FILES})
 
 # Test Files
 SET(TEST_FILES ${TEST_FILES}

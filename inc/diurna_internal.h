@@ -11,12 +11,22 @@
 #  include <processthreadsapi.h>
 
 typedef HANDLE THREAD;
+typedef HANDLE MUTEX;
+
+#  define DIURNA_LOCK_WAIT_FOR(lock_instance)  WaitForSingleObject(lock_instance, INFINITE)
+#  define DIURNA_LOCK_RELEASE(lock_instance)   ReleaseMutex(lock_instance)
+#  define DIURNA_LOCK_DESTROY(lock_instance)   CloseHandle(lock_instance)
 
 # else
 
 #  include <pthread.h>
 
-typedef pthread_t THREAD;
+typedef pthread_t       THREAD;
+typedef pthread_mutex_t MUTEX;
+
+#  define DIURNA_LOCK_WAIT_FOR(lock_instance)  pthread_mutex_lock(&lock_instance)
+#  define DIURNA_LOCK_RELEASE(lock_instance)   pthread_mutex_unlock(&lock_instance)
+#  define DIURNA_LOCK_DESTROY(lock_instance)   pthread_mutex_destroy(&lock_instance)
 # endif
 
 # define DIURNA_MAX_APPENDER 32
@@ -29,16 +39,16 @@ typedef struct s_diurna_log_message {
     enum e_diurna_log_level     level;
     struct timeval              time;
     char                        *message;
-}                 s_diurna_log_message;
+}                       s_diurna_log_message;
 
 /**
  * Message queue.
  */
 typedef struct s_diurna_queue {
-    pthread_mutex_t             lock;
+    MUTEX                       lock;
     struct s_diurna_log_message *newest;
     struct s_diurna_log_message *oldest;
-}                 s_diurna_queue;
+}                       s_diurna_queue;
 
 /**
  * Diurna context.
@@ -49,7 +59,7 @@ typedef struct s_diurna_context {
     THREAD                  log_consumer_thread;
     struct s_diurna_queue   *msg_queue;
     f_appender              appender[DIURNA_MAX_APPENDER];
-}                 s_diurna_context;
+}                       s_diurna_context;
 
 /**
  * Handle to the global Diurna context.
@@ -93,5 +103,15 @@ void diurna_queue_queue(struct s_diurna_queue *queue, struct s_diurna_log_messag
  * @return zero
  */
 void *log_consumer_thread(void *arg);
+
+#if defined WIN32
+/**
+ * Suspends the execution of the calling thread until either at
+ * least the time specified has elapsed.
+ *
+ * @param ns The number of nanoseconds to wait
+ */
+BOOLEAN nanosleep(LONGLONG ns);
+#endif
 
 #endif //LIBDIURNA_INTERNAL_H

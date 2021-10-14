@@ -1,7 +1,15 @@
 #ifndef LIBDIURNA_H
 # define LIBDIURNA_H
 
-# include <sys/time.h>
+#if defined _WIN32
+#  define WIN32_LEAN_AND_MEAN
+#  include <winsock.h>
+# else
+
+#  include <sys/time.h>
+
+# endif
+
 
 # ifdef __cplusplus
 extern "C"
@@ -45,6 +53,8 @@ void diurna_appender_console(const char *app_name,
                              const struct timeval *tv,
                              const char *log_msg);
 
+# if defined HAVE_SYSLOG
+
 /**
  * Appender - Syslog.
  *
@@ -57,6 +67,8 @@ void diurna_appender_syslog(const char *app_name,
                             enum e_diurna_log_level log_level,
                             const struct timeval *tv,
                             const char *log_msg);
+
+# endif
 
 /**
  * Initializes Diurna with the default appender (console).

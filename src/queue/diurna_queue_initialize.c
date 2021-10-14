@@ -9,8 +9,13 @@ struct s_diurna_queue *diurna_queue_initialize(void) {
     }
 
     memset(queue, 0, sizeof(struct s_diurna_queue));
+#if defined USE_WINTHREAD
+    queue->lock = CreateMutex(NULL, FALSE, NULL);
+    if (queue->lock == NULL) {
+#else
     int ret = pthread_mutex_init(&queue->lock, NULL);
     if (ret != 0) {
+#endif
         free(queue);
         return (NULL);
     }

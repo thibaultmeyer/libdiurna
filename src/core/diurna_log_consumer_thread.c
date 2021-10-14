@@ -18,7 +18,11 @@ void *log_consumer_thread(void *arg) {
             free(msg);
         } else {
             // No message on the queue, wait 50 ms
+#if defined WIN32
+            nanosleep(50000000);
+#else
             nanosleep((const struct timespec[]) {{0, 50000000}}, NULL);
+#endif
         }
     }
 

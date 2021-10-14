@@ -9,7 +9,11 @@ int diurna_destroy(void) {
 
     // Wait log consumer finish consuming remaining messages
     while (gl_diurna_ctx_handle->msg_queue->oldest != NULL) {
+#if defined WIN32
+        nanosleep(50000000);
+#else
         nanosleep((const struct timespec[]) {{0, 50000000}}, NULL);
+#endif
     }
 
     // Stop log consumer

@@ -6,7 +6,7 @@ struct s_diurna_log_message *diurna_queue_dequeue(struct s_diurna_queue *queue) 
         return (NULL);
     }
 
-    pthread_mutex_lock(&queue->lock);
+    DIURNA_LOCK_WAIT_FOR(queue->lock);
 
     struct s_diurna_log_message *msg = queue->oldest;
     if (msg != NULL) {
@@ -19,7 +19,7 @@ struct s_diurna_log_message *diurna_queue_dequeue(struct s_diurna_queue *queue) 
         queue->newest = queue->oldest;
     }
 
-    pthread_mutex_unlock(&queue->lock);
+    DIURNA_LOCK_RELEASE(queue->lock);
 
     return (msg);
 }
