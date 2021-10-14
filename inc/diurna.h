@@ -79,8 +79,10 @@ int diurna_initialize_ex(const char *app_name, enum e_diurna_log_level log_level
 
 /**
  * Destroys Diurna.
+ *
+ * @return zero in case of success
  */
-void diurna_destroy(void);
+int diurna_destroy(void);
 
 /**
  * Registers a new appender
@@ -101,8 +103,9 @@ int diurna_cfg_appender_unregister_all(void);
  * Defines a new log level.
  *
  * @param log_level The new log level
+ * @return zero in case of success
  */
-void diurna_cfg_loglevel_set(enum e_diurna_log_level log_level);
+int diurna_cfg_loglevel_set(enum e_diurna_log_level log_level);
 
 /**
  * Returns the Diurna library version as a number.
