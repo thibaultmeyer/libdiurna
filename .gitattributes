@@ -1,3 +1,4 @@
 *.c linguist-language=C
 *.h linguist-language=C
+*.3 -linguist-detectable
 CMakeLists.txt -linguist-detectable
