@@ -22,13 +22,14 @@ clang or MSVC are being correctly installed.
 ## Usage
 
 ```c
+#include <stdlib.h>
 #include <diurna.h>
 
-int main(const int argc, const char *const *argv) {
+int main(void) {
     // Initialize Diurna with min log level "INFO" and default appender
     int ret = diurna_initialize("test_diurna", DIURNA_LOGLEVEL_DEBUG);
     if (ret != DIURNA_SUCCESS) {
-        return (1);
+        return (EXIT_FAILURE);
     }
 
     // Add a new message with level "INFORMATION"
@@ -37,7 +38,7 @@ int main(const int argc, const char *const *argv) {
     // Flush latest log message and destroy Diurna context
     diurna_destroy();
     
-    return (0);
+    return (EXIT_SUCCESS);
 }
 ```
 

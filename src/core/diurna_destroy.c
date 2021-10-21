@@ -27,6 +27,9 @@ int diurna_destroy(void) {
     pthread_join(gl_diurna_ctx_handle->log_consumer_thread, NULL);
 #endif
 
+    // Unregister all appender
+    diurna_cfg_appender_unregister_all();
+
     // Destroy message queue
     diurna_queue_destroy(queue);
 

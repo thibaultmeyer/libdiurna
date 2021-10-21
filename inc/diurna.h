@@ -33,42 +33,28 @@ typedef enum e_diurna_log_level {
 } e_diurna_log_level;
 
 /**
- * Type - Function Appender - All appender must be compliant with this definition
+ * Type - Appender - Writes a new message.
  */
-typedef void (*f_appender)(const char *app_name,
-                           const enum e_diurna_log_level,
-                           const struct timeval *const tv,
-                           const char *log_msg);
+typedef void (*f_appender_write)(const void *appender_ctx,
+                                 const char *app_name,
+                                 const enum e_diurna_log_level,
+                                 const struct timeval *const tv,
+                                 const char *log_msg);
 
 /**
- * Appender - Console.
- *
- * @param app_name The application name
- * @param log_level The log level (ie : DIURNA_LOGLEVEL_INFO)
- * @param tv The current time
- * @param log_msg The current message
+ * Type - Appender - Destroys the appender.
  */
-void diurna_appender_console(const char *app_name,
-                             enum e_diurna_log_level log_level,
-                             const struct timeval *tv,
-                             const char *log_msg);
-
-# if defined HAVE_SYSLOG
+typedef void (*f_appender_destroy)(void *ctx);
 
 /**
- * Appender - Syslog.
- *
- * @param app_name The application name
- * @param log_level The log level (ie : DIURNA_LOGLEVEL_INFO)
- * @param tv The current time
- * @param log_msg The current message
+ * Represents an Appender context.
  */
-void diurna_appender_syslog(const char *app_name,
-                            enum e_diurna_log_level log_level,
-                            const struct timeval *tv,
-                            const char *log_msg);
+typedef struct s_diurna_appender {
+    void *ctx;
 
-# endif
+    f_appender_write   f_write;
+    f_appender_destroy f_destroy;
+}            s_diurna_appender;
 
 /**
  * Initializes Diurna with the default appender (console).
@@ -84,10 +70,10 @@ int diurna_initialize(const char *app_name, enum e_diurna_log_level log_level);
  *
  * @param app_name The application name
  * @param log_level The log level
- * @param appender The appender function
+ * @param appender_ctx The appender context to use
  * @return zero in case of success
  */
-int diurna_initialize_ex(const char *app_name, enum e_diurna_log_level log_level, f_appender appender);
+int diurna_initialize_ex(const char *app_name, enum e_diurna_log_level log_level, struct s_diurna_appender *appender);
 
 /**
  * Destroys Diurna.
@@ -99,10 +85,10 @@ int diurna_destroy(void);
 /**
  * Registers a new appender
  *
- * @param appender The new appender function to register
+ * @param appender_ctx The new appender context to register
  * @return zero in case of success
  */
-int diurna_cfg_appender_register(f_appender appender);
+int diurna_cfg_appender_register(struct s_diurna_appender *appender);
 
 /**
  * Unregisters all registered appender.
@@ -164,6 +150,24 @@ void diurna_warn(const char *msg_format, ...);
  * @param ... The message arguments
  */
 void diurna_error(const char *msg_format, ...);
+
+/**
+ * Creates a new "Console" appender.
+ *
+ * @return Newly created "Console" appender, otherwise, NULL
+ */
+struct s_diurna_appender *diurna_appender_console_create(void);
+
+# if defined HAVE_SYSLOG
+
+/**
+ * Creates a new "Syslog" appender.
+ *
+ * @return Newly created "Syslog" appender, otherwise, NULL
+ */
+struct s_diurna_appender *diurna_appender_syslog_create(void);
+
+# endif
 
 # ifdef __cplusplus
 }

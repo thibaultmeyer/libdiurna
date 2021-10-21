@@ -17,10 +17,16 @@ int diurna_initialize(const char *const app_name, const enum e_diurna_log_level 
         // Initialize context
         gl_diurna_ctx_handle->app_name  = strdup(app_name);
         gl_diurna_ctx_handle->log_level = log_level;
-        gl_diurna_ctx_handle->msg_queue = diurna_queue_initialize();
-        gl_diurna_ctx_handle->appender[0] = &diurna_appender_console;
 
+        gl_diurna_ctx_handle->msg_queue = diurna_queue_initialize();
         if (gl_diurna_ctx_handle->msg_queue == NULL) {
+            free(gl_diurna_ctx_handle);
+            return (DIURNA_E_NOMEMORY);
+        }
+
+        gl_diurna_ctx_handle->appender[0] = diurna_appender_console_create();
+        if (gl_diurna_ctx_handle->appender[0] == NULL) {
+            free(gl_diurna_ctx_handle->msg_queue);
             free(gl_diurna_ctx_handle);
             return (DIURNA_E_NOMEMORY);
         }

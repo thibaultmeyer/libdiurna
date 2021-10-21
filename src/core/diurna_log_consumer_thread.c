@@ -11,7 +11,12 @@ void *log_consumer_thread(void *arg) {
 
         if (msg != NULL) {
             for (int idx = 0; gl_diurna_ctx_handle->appender[idx] != NULL; ++idx) {
-                gl_diurna_ctx_handle->appender[idx](gl_diurna_ctx_handle->app_name, msg->level, &msg->time, msg->message);
+                gl_diurna_ctx_handle->appender[idx]->f_write(
+                        gl_diurna_ctx_handle->appender[idx]->ctx,
+                        gl_diurna_ctx_handle->app_name,
+                        msg->level,
+                        &msg->time,
+                        msg->message);
             }
 
             free(msg->message);

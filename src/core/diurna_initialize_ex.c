@@ -3,7 +3,9 @@
 #include "diurna.h"
 #include "diurna_internal.h"
 
-int diurna_initialize_ex(const char *const app_name, const enum e_diurna_log_level log_level, f_appender const appender) {
+int diurna_initialize_ex(const char *const app_name,
+                         const enum e_diurna_log_level log_level,
+                         struct s_diurna_appender *const appender_ctx) {
     if (gl_diurna_ctx_handle == NULL) {
         // Allocate memory
         gl_diurna_ctx_handle = malloc(sizeof(struct s_diurna_context) + 1);
@@ -16,7 +18,7 @@ int diurna_initialize_ex(const char *const app_name, const enum e_diurna_log_lev
         gl_diurna_ctx_handle->app_name  = strdup(app_name);
         gl_diurna_ctx_handle->log_level = log_level;
         gl_diurna_ctx_handle->msg_queue = diurna_queue_initialize();
-        gl_diurna_ctx_handle->appender[0] = appender;
+        gl_diurna_ctx_handle->appender[0] = appender_ctx;
 
         if (gl_diurna_ctx_handle->msg_queue == NULL) {
             free(gl_diurna_ctx_handle);

@@ -2,11 +2,13 @@
 #include <time.h>
 #include "diurna.h"
 
-void diurna_appender_console(const char *const app_name,
-                             const enum e_diurna_log_level level,
-                             const struct timeval *const tv,
-                             const char *const log_msg) {
-    (void) app_name; // Unused parameter
+void diurna_appender_console_write(const void *appender_ctx,
+                                   const char *const app_name,
+                                   const enum e_diurna_log_level level,
+                                   const struct timeval *const tv,
+                                   const char *const log_msg) {
+    (void) appender_ctx; // Unused parameter
+    (void) app_name;     // Unused parameter
 
     // Convert timeval to human reading time
     char      date_stamp[24] = {0};

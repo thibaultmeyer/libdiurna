@@ -54,11 +54,11 @@ typedef struct s_diurna_queue {
  * Diurna context.
  */
 typedef struct s_diurna_context {
-    char                    *app_name;
-    enum e_diurna_log_level log_level;
-    THREAD                  log_consumer_thread;
-    struct s_diurna_queue   *msg_queue;
-    f_appender              appender[DIURNA_MAX_APPENDER];
+    char                     *app_name;
+    enum e_diurna_log_level  log_level;
+    THREAD                   log_consumer_thread;
+    struct s_diurna_queue    *msg_queue;
+    struct s_diurna_appender *appender[DIURNA_MAX_APPENDER];
 }                       s_diurna_context;
 
 /**
@@ -103,6 +103,41 @@ void diurna_queue_queue(struct s_diurna_queue *queue, struct s_diurna_log_messag
  * @return zero
  */
 void *log_consumer_thread(void *arg);
+
+
+/**
+ * Appender - Console - Write.
+ *
+ * @param appender_ctx The appender context
+ * @param app_name The application name
+ * @param log_level The log level (ie : DIURNA_LOGLEVEL_INFO)
+ * @param tv The current time
+ * @param log_msg The current message
+ */
+void diurna_appender_console_write(const void *appender_ctx,
+                                   const char *app_name,
+                                   enum e_diurna_log_level log_level,
+                                   const struct timeval *tv,
+                                   const char *log_msg);
+
+# if defined HAVE_SYSLOG
+
+/**
+ * Appender - Syslog.
+ *
+ * @param appender_ctx The appender context
+ * @param app_name The application name
+ * @param log_level The log level (ie : DIURNA_LOGLEVEL_INFO)
+ * @param tv The current time
+ * @param log_msg The current message
+ */
+void diurna_appender_syslog_write(const void *appender_ctx,
+                                  const char *app_name,
+                                  enum e_diurna_log_level log_level,
+                                  const struct timeval *tv,
+                                  const char *log_msg);
+
+# endif
 
 #if defined WIN32
 /**

@@ -7,10 +7,10 @@ Diurna C Library (diurna, -ldiurna)
 .nf
 .B #include <diurna.h>
 .PP
-.BI ""int " diurna_cfg_appender_register(f_appender " appender ");
+.BI ""int " diurna_cfg_appender_register(f_appender_write " appender ");
 .PP
 .PP
-.BI ""typedef " void (* " f_appender ") (const char * " app_name ",
+.BI ""typedef " void (* " f_appender_write ") (const char * " app_name ",
 .RE
 .RS 36
 .BI "const enum " e_diurna_log_level ",

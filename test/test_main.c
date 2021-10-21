@@ -1,4 +1,4 @@
-#include <stddef.h>
+#include <stdlib.h>
 #include "diurna.h"
 
 int main(const int argc, const char *const *argv) {
@@ -7,7 +7,7 @@ int main(const int argc, const char *const *argv) {
 
     int ret = diurna_initialize("test_diurna", DIURNA_LOGLEVEL_DEBUG);
     if (ret != DIURNA_SUCCESS) {
-        return (1);
+        return (EXIT_FAILURE);
     }
 
     diurna_info("libdiurna version %s (%d)", diurna_version_as_str(), diurna_version_as_int());
@@ -17,5 +17,5 @@ int main(const int argc, const char *const *argv) {
 
     diurna_destroy();
 
-    return (0);
+    return (EXIT_SUCCESS);
 }
