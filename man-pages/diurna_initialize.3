@@ -18,20 +18,43 @@ Diurna C Library (diurna, -ldiurna)
 .BI "enum e_diurna_log_level " log_level ",
 .RE
 .RS 25
-.BI f_appender_write " appender");
+.BI "struct s_diurna_appender " appender );
 .RE
 .PP
 .PP
-.BI ""typedef " void (* " f_appender_write ") (const char * " app_name ",
+.BI  typedef " " struct " " s_diurna_appender " " {
 .RE
-.RS 29
+.RS 5
+.BI void* " " "             "ctx;
+.RE
+.RS 5
+.BI    f_appender_write " " "  "f_write;
+.RE
+.RS 5
+.BI    f_appender_destroy " " ""f_destroy;
+.RE
+.RS 0
+.BI } " " s_diurna_appender;
+.RE
+.PP
+.PP
+.BI ""typedef " void (* " f_appender_write ") (void* "ctx,
+.RE
+.RS 35
+.BI "const char * " app_name ",
+.RE
+.RS 35
 .BI "const enum " e_diurna_log_level ",
 .RE
-.RS 29
+.RS 35
 .BI "const struct timeval * const " tv ",
 .RE
-.RS 29
+.RS 35
 .BI "const char * " log_msg );
+.RE
+.PP
+.PP
+.BI ""typedef " void (* " f_appender_destroy ") (void* "ctx );
 .RE
 .PP
 .BI "typedef enum " e_diurna_log_level " {
@@ -75,6 +98,9 @@ Out of memory.
 .TP
 .B DIURNA_E_THREADCREATION
 Can't create the log consumer thread.
+.TP
+.B DIURNA_E_INVALIDAPPENDER
+Appender is invalid.
 .SH SEE ALSO
 .ad l
 .nh
