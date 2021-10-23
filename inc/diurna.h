@@ -16,11 +16,12 @@ extern "C"
 {
 # endif
 
-# define DIURNA_SUCCESS          0
-# define DIURNA_E_NOINIT         1
-# define DIURNA_E_NOMEMORY       2
-# define DIURNA_E_THREADCREATION 3
-# define DIURNA_E_NOMOREAPPENDER 4
+# define DIURNA_SUCCESS           0
+# define DIURNA_E_NOINIT          1
+# define DIURNA_E_NOMEMORY        2
+# define DIURNA_E_THREADCREATION  3
+# define DIURNA_E_NOMOREAPPENDER  4
+# define DIURNA_E_INVALIDAPPENDER 5
 
 /**
  * The different levels of log message.

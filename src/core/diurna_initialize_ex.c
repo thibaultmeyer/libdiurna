@@ -5,8 +5,13 @@
 
 int diurna_initialize_ex(const char *const app_name,
                          const enum e_diurna_log_level log_level,
-                         struct s_diurna_appender *const appender_ctx) {
+                         struct s_diurna_appender *const appender) {
     if (gl_diurna_ctx_handle == NULL) {
+        // Check appender
+        if (appender == NULL || appender->f_write == NULL) {
+            return (DIURNA_E_INVALIDAPPENDER);
+        }
+
         // Allocate memory
         gl_diurna_ctx_handle = malloc(sizeof(struct s_diurna_context) + 1);
         if (gl_diurna_ctx_handle == NULL) {
@@ -18,7 +23,7 @@ int diurna_initialize_ex(const char *const app_name,
         gl_diurna_ctx_handle->app_name  = strdup(app_name);
         gl_diurna_ctx_handle->log_level = log_level;
         gl_diurna_ctx_handle->msg_queue = diurna_queue_initialize();
-        gl_diurna_ctx_handle->appender[0] = appender_ctx;
+        gl_diurna_ctx_handle->appender[0] = appender;
 
         if (gl_diurna_ctx_handle->msg_queue == NULL) {
             free(gl_diurna_ctx_handle);
