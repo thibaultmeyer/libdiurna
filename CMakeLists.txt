@@ -58,13 +58,16 @@ IF (NOT WIN32)
     LIST(
             APPEND
             APPENDER_SYSLOG_FILES
-            src/appender/diurna_appender_syslog_create
+            src/appender/diurna_appender_syslog_create.c
             src/appender/diurna_appender_syslog_write.c)
 ENDIF (NOT WIN32)
 
 SET(SOURCE_FILES ${SOURCE_FILES}
         src/appender/diurna_appender_console_create.c
         src/appender/diurna_appender_console_write.c
+        src/appender/diurna_appender_file_create.c
+        src/appender/diurna_appender_file_destroy.c
+        src/appender/diurna_appender_file_write.c
         ${APPENDER_SYSLOG_FILES}
         src/core/diurna_cfg_appender_register.c
         src/core/diurna_cfg_appender_unregister_all.c

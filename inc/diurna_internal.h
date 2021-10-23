@@ -120,10 +120,32 @@ void diurna_appender_console_write(const void *appender_ctx,
                                    const struct timeval *tv,
                                    const char *log_msg);
 
+/**
+ * Appender - File - Write.
+ *
+ * @param appender_ctx The appender context
+ * @param app_name The application name
+ * @param log_level The log level (ie : DIURNA_LOGLEVEL_INFO)
+ * @param tv The current time
+ * @param log_msg The current message
+ */
+void diurna_appender_file_write(const void *appender_ctx,
+                                const char *app_name,
+                                enum e_diurna_log_level log_level,
+                                const struct timeval *tv,
+                                const char *log_msg);
+
+/**
+ * Appender - File - Destroy.
+ *
+ * @param appender_ctx The appender context
+ */
+void diurna_appender_file_destroy(void *appender_ctx);
+
 # if defined HAVE_SYSLOG
 
 /**
- * Appender - Syslog.
+ * Appender - Syslog - Write.
  *
  * @param appender_ctx The appender context
  * @param app_name The application name

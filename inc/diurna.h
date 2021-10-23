@@ -159,6 +159,14 @@ void diurna_error(const char *msg_format, ...);
  */
 struct s_diurna_appender *diurna_appender_console_create(void);
 
+/**
+ * Creates a new "File" appender.
+ *
+ * @param filename The filename of the file to use to write log
+ * @return Newly created "File" appender, otherwise, NULL
+ */
+struct s_diurna_appender *diurna_appender_file_create(const char *filename);
+
 # if defined HAVE_SYSLOG
 
 /**
