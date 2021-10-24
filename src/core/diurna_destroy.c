@@ -23,7 +23,6 @@ int diurna_destroy(void) {
 #if defined USE_WINTHREAD
     WaitForSingleObject(gl_diurna_ctx_handle->log_consumer_thread, INFINITE);
 #else
-    pthread_cancel(gl_diurna_ctx_handle->log_consumer_thread);
     pthread_join(gl_diurna_ctx_handle->log_consumer_thread, NULL);
 #endif
 

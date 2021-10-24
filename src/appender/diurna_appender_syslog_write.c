@@ -1,7 +1,7 @@
 #include <syslog.h>
 #include "diurna.h"
 
-void diurna_appender_syslog_write(const void *appender_ctx,
+void diurna_appender_syslog_write(void *const appender_ctx,
                                   const char *const app_name,
                                   const enum e_diurna_log_level level,
                                   const struct timeval *const tv,

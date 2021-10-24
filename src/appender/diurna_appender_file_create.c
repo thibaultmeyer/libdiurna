@@ -1,5 +1,3 @@
-#include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "diurna_internal.h"
@@ -15,10 +13,20 @@ struct s_diurna_appender *diurna_appender_file_create(const char *filename) {
 
     appender->f_write   = &diurna_appender_file_write;
     appender->f_destroy = &diurna_appender_file_destroy;
+    appender->ctx       = malloc(sizeof(struct s_diurna_appender_file_ctx));
 
-    // Open file
-    appender->ctx = fopen(filename, "a+");
     if (appender->ctx == NULL) {
+        free(appender);
+        return (NULL);
+    }
+
+    struct s_diurna_appender_file_ctx *ctx = appender->ctx;
+    ctx->output_filename  = strdup(filename);
+    ctx->current_filename = NULL;
+    ctx->current_date     = NULL;
+
+    if (ctx->output_filename == NULL) {
+        free(appender->ctx);
         free(appender);
         return (NULL);
     }

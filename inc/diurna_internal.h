@@ -50,6 +50,12 @@ typedef struct s_diurna_queue {
     struct s_diurna_log_message *oldest;
 }                       s_diurna_queue;
 
+typedef struct s_diurna_appender_file_ctx {
+    char *output_filename;
+    char *current_filename;
+    char *current_date;
+}                       s_diurna_appender_file_ctx;
+
 /**
  * Diurna context.
  */
@@ -114,7 +120,7 @@ void *log_consumer_thread(void *arg);
  * @param tv The current time
  * @param log_msg The current message
  */
-void diurna_appender_console_write(const void *appender_ctx,
+void diurna_appender_console_write(void *const appender_ctx,
                                    const char *app_name,
                                    enum e_diurna_log_level log_level,
                                    const struct timeval *tv,
@@ -129,7 +135,7 @@ void diurna_appender_console_write(const void *appender_ctx,
  * @param tv The current time
  * @param log_msg The current message
  */
-void diurna_appender_file_write(const void *appender_ctx,
+void diurna_appender_file_write(void *appender_ctx,
                                 const char *app_name,
                                 enum e_diurna_log_level log_level,
                                 const struct timeval *tv,
@@ -153,7 +159,7 @@ void diurna_appender_file_destroy(void *appender_ctx);
  * @param tv The current time
  * @param log_msg The current message
  */
-void diurna_appender_syslog_write(const void *appender_ctx,
+void diurna_appender_syslog_write(void *const appender_ctx,
                                   const char *app_name,
                                   enum e_diurna_log_level log_level,
                                   const struct timeval *tv,

@@ -36,7 +36,7 @@ typedef enum e_diurna_log_level {
 /**
  * Type - Appender - Writes a new message.
  */
-typedef void (*f_appender_write)(const void *appender_ctx,
+typedef void (*f_appender_write)(void *appender_ctx,
                                  const char *app_name,
                                  const enum e_diurna_log_level,
                                  const struct timeval *const tv,

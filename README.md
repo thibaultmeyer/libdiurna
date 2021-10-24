@@ -59,7 +59,7 @@ int main(void) {
     // Add a new message with level "INFORMATION"
     diurna_info("libdiurna version %s (%d)", diurna_version_as_str(), diurna_version_as_int());
 
-    // Flush latest log message and destroy Diurna context
+    // Flush latest log messages and destroy Diurna context
     diurna_destroy();
     
     return (EXIT_SUCCESS);
@@ -108,11 +108,11 @@ int main(void) {
 
 ## Built-in appender
 
-| APPENDER | USAGE |
-|----------|-------|
-| Console  | diurna_appender_console_create(void) |
-| File     | diurna_appender_file_create(const char* filename) |
-| Syslog   | diurna_appender_syslog_create(void) |
+| APPENDER | USAGE | INFORMATION |
+|----------|-------|-------------|
+| Console  | diurna_appender_console_create(void) ||
+| File     | diurna_appender_file_create(const char* filename) | The filename can contains following variables: `{appname}` and `{date}`|
+| Syslog   | diurna_appender_syslog_create(void) ||
 
 
 ## License

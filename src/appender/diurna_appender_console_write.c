@@ -2,7 +2,7 @@
 #include <time.h>
 #include "diurna.h"
 
-void diurna_appender_console_write(const void *appender_ctx,
+void diurna_appender_console_write(void *const appender_ctx,
                                    const char *const app_name,
                                    const enum e_diurna_log_level level,
                                    const struct timeval *const tv,

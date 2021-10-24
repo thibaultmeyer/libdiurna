@@ -1,10 +1,19 @@
-#include <stdio.h>
+#include "diurna_internal.h"
+#include <stdlib.h>
 
 void diurna_appender_file_destroy(void *appender_ctx) {
     if (appender_ctx != NULL) {
-        FILE *file_description = appender_ctx;
+        struct s_diurna_appender_file_ctx *ctx = appender_ctx;
 
-        fflush(file_description);
-        fclose(file_description);
+        if (ctx->output_filename != NULL) {
+            free(ctx->output_filename);
+        }
+        if (ctx->current_filename != NULL) {
+            free(ctx->current_filename);
+        }
+        if (ctx->current_date != NULL) {
+            free(ctx->current_date);
+        }
+        free(ctx);
     }
 }
