@@ -115,5 +115,14 @@ int main(void) {
 | Syslog   | diurna_appender_syslog_create(void) ||
 
 
+## Create your own appender
+
+Creating a new appender is very simple, you need to initialize an instance of
+`struct s_diurna_appender` in which you have defined, at least, the function
+`f_appender_write`.
+
+Feel free to consult the source code of the built-in appender on `./src/appender/`.
+
+
 ## License
 This project is released under terms of the [MIT license](https://github.com/thibaultmeyer/libdiurna/blob/master/LICENSE).
