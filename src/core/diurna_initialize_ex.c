@@ -20,15 +20,21 @@ int diurna_initialize_ex(const char *const app_name,
         memset(gl_diurna_ctx_handle, 0, sizeof(struct s_diurna_context) + 1);
 
         // Initialize context
-        gl_diurna_ctx_handle->app_name  = strdup(app_name);
         gl_diurna_ctx_handle->log_level = log_level;
-        gl_diurna_ctx_handle->msg_queue = diurna_queue_initialize();
-        gl_diurna_ctx_handle->appender[0] = appender;
-
-        if (gl_diurna_ctx_handle->msg_queue == NULL) {
+        gl_diurna_ctx_handle->app_name  = strdup(app_name);
+        if (gl_diurna_ctx_handle->app_name == NULL) {
             free(gl_diurna_ctx_handle);
             return (DIURNA_E_NOMEMORY);
         }
+
+        gl_diurna_ctx_handle->msg_queue = diurna_queue_initialize();
+        if (gl_diurna_ctx_handle->msg_queue == NULL) {
+            free(gl_diurna_ctx_handle->app_name);
+            free(gl_diurna_ctx_handle);
+            return (DIURNA_E_NOMEMORY);
+        }
+
+        gl_diurna_ctx_handle->appender[0] = appender;
 
         // Create "Appender" Thread
 #if defined USE_WINTHREAD
@@ -39,6 +45,7 @@ int diurna_initialize_ex(const char *const app_name,
         if (ret != 0) {
 #endif
             diurna_queue_destroy(gl_diurna_ctx_handle->msg_queue);
+            free(gl_diurna_ctx_handle->app_name);
             free(gl_diurna_ctx_handle);
             return (DIURNA_E_THREADCREATION);
         }
