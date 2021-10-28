@@ -17,6 +17,7 @@ static inline const char *retrieve_filename(struct s_diurna_appender_file_ctx *c
     size_t idx_str        = 0;
     size_t allocated      = strlen(ctx->output_filename);
     char   *str_parsed    = malloc(sizeof(char) * allocated);
+    char   *realloc_ptr   = NULL;
     char   variable[12]   = {0};
 
     memset(str_parsed, 0, sizeof(char) * allocated);
@@ -33,14 +34,26 @@ static inline const char *retrieve_filename(struct s_diurna_appender_file_ctx *c
 
             if (strncmp(variable, "appname", 7) == 0) {
                 size_t appname_len = strlen(appname);
-                str_parsed = realloc(str_parsed, sizeof(char) * (allocated + appname_len) + 1);
+                realloc_ptr = realloc(str_parsed, sizeof(char) * (allocated + appname_len) + 1);
+                if (realloc_ptr == NULL) {
+                    perror("diurna_appender_file_write: realloc call failure");
+                    free(str_parsed);
+                    return (NULL);
+                }
 
+                str_parsed = realloc_ptr;
                 memcpy(str_parsed + idx_str_parsed, appname, appname_len);
                 idx_str_parsed += appname_len;
                 allocated += appname_len;
             } else if (strncmp(variable, "date", 4) == 0) {
-                str_parsed = realloc(str_parsed, sizeof(char) * allocated + 11);
+                realloc_ptr = realloc(str_parsed, sizeof(char) * allocated + 11);
+                if (realloc_ptr == NULL) {
+                    perror("diurna_appender_file_write: realloc call failure");
+                    free(str_parsed);
+                    return (NULL);
+                }
 
+                str_parsed = realloc_ptr;
                 memcpy(str_parsed + idx_str_parsed, date, 10);
                 idx_str_parsed += 10;
                 allocated += 10;
@@ -106,6 +119,7 @@ void diurna_appender_file_write(void *const appender_ctx,
         fprintf(file, "%s.%.03d [%s] %s\n", date_stamp, (int) (tv->tv_usec / 1000), level_as_str, log_msg);
         fclose(file);
     } else {
+        perror("diurna_appender_file_write: fopen call failure");
         perror(filename);
     }
 }
