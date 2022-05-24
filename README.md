@@ -3,6 +3,7 @@
 [![Latest release](https://img.shields.io/badge/latest_release-1.0.0-orange.svg)](https://github.com/thibaultmeyer/libdiurna/releases)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/thibaultmeyer/libdiurna/blob/master/LICENSE)
 [![CodeFactor](https://www.codefactor.io/repository/github/thibaultmeyer/libdiurna/badge)](https://www.codefactor.io/repository/github/thibaultmeyer/libdiurna)
+[![Repository size](https://img.shields.io/github/repo-size/thibaultmeyer/libdiurna.svg?logo=git)](https://github.com/thibaultmeyer/libdiurna)
 
 A simple, fast, and portable logging library.
 *****
